@@ -1,4 +1,4 @@
---Creating and opening ics file----
+Creating and Opening an ICS File
+An ICS file is a calendar file that follows a universal format for sharing events, commonly referred to as an iCalendar file.
 
-An ics file is a calendar file that uses universal format for sharing events. Also known as the iCalendar file.
-It is not possible to open an ics file and open it with a calendar to import an event. 
+However, it is not possible to directly open an ICS file and import an event into a calendar without additional handling.
