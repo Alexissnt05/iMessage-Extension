@@ -1,0 +1,11 @@
+---Deep linking----
+
+A deeplink is a special url that is associated with an app. When a user tries to open this url, iOS recognizes that this link is a deeplink, and will try to open the app associated with the link.
+
+UIApplication.shared.open(url) is the most common method but can be restricted in app extensions like iMessage extensions. App extensions are not allowed to open URLs directly
+
+"'shared' is unavailable in application extensions for iOS: Use view controller based solutions where appropriate instead."
+
+--Creating and opening ics file----
+
+An ics file is a calendar file that uses universal format for sharing events. Also known as the iCalendar file.
