@@ -1,7 +1,7 @@
----Deep linking----
+Deep Linking
+A deep link is a unique URL linked to a specific app. When a user attempts to access this URL, iOS identifies it as a deep link and tries to launch the corresponding app.
 
-A deeplink is a special url that is associated with an app. When a user tries to open this url, iOS recognizes that this link is a deeplink, and will try to open the app associated with the link.
+The most commonly used method for opening a URL is UIApplication.shared.open(url). However, this approach is restricted in certain app extensions, such as iMessage extensions, as they are not permitted to open URLs directly.
 
-UIApplication.shared.open(url) is the most common method but can be restricted in app extensions like iMessage extensions. App extensions are not allowed to open URLs directly
-
-"'shared' is unavailable in application extensions for iOS: Use view controller based solutions where appropriate instead."
+In such cases, attempting to use UIApplication.shared may result in an error stating:
+"'shared' is unavailable in application extensions for iOS: Use view controller-based solutions where appropriate instead."
