@@ -31,8 +31,8 @@ struct AddToCalendarButton: View {
     }
 
     private func generateICSContent() -> String {
-        let dateFormatter = ISO8601DateFormatter()
-        dateFormatter.formatOptions = [.withInternetDateTime]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd'T'HHmmss" //Shortcut does not work without this date format
 
         let startDate = dateFormatter.string(from: eventStartDate)
         let endDate = dateFormatter.string(from: eventStartDate.addingTimeInterval(3600)) // 1-hour duration
@@ -40,6 +40,7 @@ struct AddToCalendarButton: View {
         return """
         BEGIN:VCALENDAR
         VERSION:2.0
+        CALSCALE: GREGORIAN
         BEGIN:VEVENT
         SUMMARY:\(eventName)
         LOCATION:\(eventLocation)
@@ -100,4 +101,3 @@ class MessagesViewController: MSMessagesAppViewController, UIDocumentPickerDeleg
         swiftUIView.didMove(toParent: self)
     }
 }
-
