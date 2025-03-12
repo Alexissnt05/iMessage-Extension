@@ -10,23 +10,23 @@ import UniformTypeIdentifiers
 import UIKit
 import Messages
 
-struct AddToCalendarButton: View {
+struct SendMessageButton: View {
     let eventName: String
     let eventLocation: String
     let eventStartDate: Date
-    let viewController: UIViewController  // Pass in a reference to the iMessage ViewController
+    let viewController: MSMessagesAppViewController  // Reference to iMessage ViewController
 
     var body: some View {
-        Button("Add to Calendar") {
-            saveAndOpenICSFile()
+        Button("Send ICS File") {
+            sendMessage()
         }
         .padding()
     }
 
-    private func saveAndOpenICSFile() {
+    private func sendMessage() {
         let icsContent = generateICSContent()
         if let fileURL = saveICSFile(content: icsContent) {
-            presentShareSheet(for: fileURL)
+            sendMessageWithFile(fileURL: fileURL)
         }
     }
 
@@ -64,10 +64,25 @@ struct AddToCalendarButton: View {
         }
     }
 
-    private func presentShareSheet(for fileURL: URL) {
-           let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
-           viewController.present(activityViewController, animated: true)
-       }
+    private func sendMessageWithFile(fileURL: URL) {
+        let session = MSSession()
+        let message = MSMessage(session: session)
+
+        let layout = MSMessageTemplateLayout()
+        layout.caption = "Here's your event: \(eventName)"
+        layout.subcaption = "Location: \(eventLocation)"
+        layout.trailingCaption = "Tap to add to calendar"
+        layout.image = UIImage(systemName: "calendar") // Optional image
+
+        message.layout = layout
+        message.url = fileURL // Attach the ICS file URL
+
+        viewController.activeConversation?.insert(message, completionHandler: { error in
+            if let error = error {
+                print("Error sending message: \(error)")
+            }
+        })
+    }
 }
 
 struct MessagesView: View {
@@ -77,11 +92,11 @@ struct MessagesView: View {
         VStack {
             Text("Event Planner")
                 .font(.title2)
-            AddToCalendarButton(
+            SendMessageButton(
                 eventName: "YOGO Meeting",
                 eventLocation: "Discord",
                 eventStartDate: Date(),
-                viewController: viewController  // Pass reference
+                viewController: viewController as! MSMessagesAppViewController
             )
         }
         .padding()
@@ -100,4 +115,3 @@ class MessagesViewController: MSMessagesAppViewController, UIDocumentPickerDeleg
         swiftUIView.didMove(toParent: self)
     }
 }
-

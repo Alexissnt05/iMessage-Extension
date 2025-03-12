@@ -1,4 +1,9 @@
 Creating and Opening an ICS File
 An ICS file is a calendar file that follows a universal format for sharing events, commonly referred to as an iCalendar file.
 
-However, it is not possible to directly open an ICS file and import an event into a calendar without additional handling.
+However, it is not possible to directly open an ICS file and import an event into a calendar.
+
+The error message "The recipient cannot receive this item via satellite" happens because it's not possible to send an ics file as a message because iMessage does not support sending .ics files directly as attachments. Unlike other formats (e.g., images or plain text), .ics files cannot be embedded directly within an MSMessage.
+
+
+
